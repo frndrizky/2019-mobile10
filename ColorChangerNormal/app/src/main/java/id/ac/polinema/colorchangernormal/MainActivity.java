@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import java.util.Random;
@@ -15,7 +16,8 @@ public class MainActivity extends AppCompatActivity {
 	private Button btnChangeColor;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		rootView = findViewById(R.id.layout_main);
@@ -24,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
 		rootView.setBackgroundColor(generateRandomColor());
 
 		// Tambahkan event klik pada tombol
+		btnChangeColor.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				int color = generateRandomColor();
+				rootView.setBackgroundColor(color);
+			}
+		});
 	}
 
 	private int generateRandomColor(){
