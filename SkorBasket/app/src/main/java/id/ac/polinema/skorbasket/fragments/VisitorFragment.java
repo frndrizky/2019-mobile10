@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import id.ac.polinema.skorbasket.R;
 import id.ac.polinema.skorbasket.viewmodels.SharedScore;
 
@@ -35,6 +37,15 @@ public class VisitorFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		sharedScore = ViewModelProviders.of(requireActivity()).get(SharedScore.class);
+
+		sharedScore.getScoreVisitor().observe(requireActivity(), new Observer<Integer>() {
+			@Override
+			public void onChanged(Integer score) {
+				scoreVisitor.setText(String.valueOf(score));
+				scoreDefault = score;
+			}
+		});
 	}
 
 	@Override
@@ -52,7 +63,26 @@ public class VisitorFragment extends Fragment {
 		scoreVisitor = view.findViewById(R.id.scoreVisitor);
 		scoreSatuVisitor = view.findViewById(R.id.scoreSatuVisitor);
 
+		scoreSatuVisitor.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				sharedScore.setScoreVisitor(scoreDefault + 1);
+			}
+		});
 
+		scoreDuaVisitor.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				sharedScore.setScoreVisitor(scoreDefault + 2);
+			}
+		});
+
+		scoreTigaVisitor.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				sharedScore.setScoreVisitor(scoreDefault + 3);
+			}
+		});
 		// Tambahkan logic tombol di bagian bawah ini
 	}
 }
